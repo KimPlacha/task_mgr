@@ -6,7 +6,8 @@ from app.database import task
 
 app= Flask(__name__)
 
-@app = Flask{__name)
+@app = Flask(__name__)
+
 
 @app.get("/tasks")
 def get_all_tasks():
@@ -26,4 +27,20 @@ def get_single_task(pk):  # sourcery skip: inline-immediately-returned-variable
     }
     return out
 
-@app.post
+@app.post("/tasks")
+def create_task():
+    task_data = request.get_json()
+    task.insert(task_data)
+    return "", 204
+
+@app.put("/tasks/<int:pk>")
+def update_task(pk):
+    task_data = request.get_json()
+    task.update_by_id(task_data, pk)
+    return "", 204
+
+@app.delete("/tasks/<int:pk>")
+def delete_task(pk):
+    task.delete_by_id(pk)
+    return "", 204
+    
